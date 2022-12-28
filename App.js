@@ -1,20 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { StyleSheet } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Provider } from 'react-redux';
+import store from './store/CustomerServiceStore.js';
+import Root from './components/Root';
+
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
+  React.useEffect(() => {
+    //console.log(getHtml());
+  } ,[])
+  
+  const getHtml = async () => {
+    const response = await fetch("https://hive2.lexvid.com/api/Find?Filter=bi");
+    const html = await response.json();
+    console.log(html)   
+
+    return html;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <Root />
+    </Provider>
   );
 }
 
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  backgroundImage: {
+      flex: 1,
+      width: null,
+      height: null,
   },
 });
